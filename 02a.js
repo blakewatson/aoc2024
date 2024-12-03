@@ -5,8 +5,7 @@ const reports = data
   .map((line) => line.split(' ').map((_) => parseInt(_)));
 
 const safeReports = reports.filter((levels) => {
-  const benchmarkDelta = levels[0] - levels[1];
-  const benchmarkSign = Math.sign(benchmarkDelta);
+  const benchmarkSign = Math.sign(levels[0] - levels[1]);
 
   for (let i = 0; i < levels.length - 1; i++) {
     const delta = levels[i] - levels[i + 1];
