@@ -1,6 +1,6 @@
 const { readFileSync } = require('fs');
 
-const data = readFileSync(`${__dirname}/test.txt`, 'utf-8');
+const data = readFileSync(`${__dirname}/input.txt`, 'utf-8');
 
 const dataParts = data.split('\n\n');
 const rules = dataParts[0]
@@ -34,7 +34,9 @@ invalidUpdates = invalidUpdates.map((pages) => {
       return 0;
     }
 
-    return a === relevantRules[0] ? -1 : 1;
+    const rule = relevantRules[0];
+
+    return a === rule[0] ? -1 : 1;
   });
 
   return pages;
