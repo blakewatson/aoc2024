@@ -28,13 +28,11 @@ let invalidUpdates = updates.filter((pages) => {
 
 invalidUpdates = invalidUpdates.map((pages) => {
   pages.sort((a, b) => {
-    const relevantRules = rules.filter((r) => r.includes(a) && r.includes(b));
+    const rule = rules.find((r) => r.includes(a) && r.includes(b));
 
-    if (!relevantRules.length) {
+    if (!rule) {
       return 0;
     }
-
-    const rule = relevantRules[0];
 
     return a === rule[0] ? -1 : 1;
   });
