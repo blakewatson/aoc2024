@@ -1,4 +1,6 @@
-import data from './01-input.js';
+const { readFileSync } = require('fs');
+
+const data = readFileSync(`${__dirname}/input.txt`, 'utf-8');
 
 const listA = [];
 const listB = [];

@@ -1,6 +1,6 @@
-import { readFileSync } from 'fs';
+const { readFileSync } = require('fs');
 
-const data = readFileSync('./04-input.txt', 'utf-8');
+const data = readFileSync(`${__dirname}/input.txt`, 'utf-8');
 
 const grid = data.split('\n').map((row) => row.split(''));
 const target = 'MAS';

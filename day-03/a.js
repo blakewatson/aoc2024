@@ -1,6 +1,6 @@
-import { readFileSync } from 'fs';
+const { readFileSync } = require('fs');
 
-const data = readFileSync('03-input.txt', 'utf-8');
+const data = readFileSync(`${__dirname}/input.txt`, 'utf-8');
 
 const pattern = /mul\(\d+,\d+\)/g;
 
