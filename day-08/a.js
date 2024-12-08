@@ -4,12 +4,6 @@ const { readFileSync } = require('fs');
 
 /** @typedef {[number, number]} Point */
 
-/**
- * @typedef Pair
- * @property {[Point, Point]} points
- * @property {[Point, Point]} antinodes
- */
-
 main();
 
 function main() {
@@ -29,51 +23,36 @@ function main() {
     }, obj);
   }, {});
 
-  const combinations = Object.keys(antennas).reduce(
-    /** @param {Pair[]} combos */
-    (combos, key) => {
-      combos = combos.concat(getCombinations(antennas[key]));
-      return combos;
-    },
-    [],
-  );
-
-  const validAntinodes = combinations.reduce(
+  const antinodes = Object.keys(antennas).reduce(
     /** @param {Point[]} nodes */
-    (nodes, pair) => {
-      for (let node of pair.antinodes) {
-        if (data[node[1]]?.[node[0]]) {
-          nodes.push(node);
-        }
-      }
+    (nodes, key) => {
+      nodes = nodes.concat(getCombinations(data, antennas[key]));
       return nodes;
     },
     [],
   );
 
-  console.log(dedupe(validAntinodes).length);
+  console.log(dedupe(antinodes).length);
 }
 
-/** @param {Point[]} points */
-function getCombinations(points) {
+/**
+ * @param {string[][]} data
+ * @param {Point[]} points
+ * @returns
+ */
+function getCombinations(data, points) {
   return points.reduce(
-    /** @param {Pair[]} combos */
-    (combos, point, i) => {
+    /** @param {Point[]} nodes */
+    (nodes, point, i) => {
       if (i === points.length - 1) {
-        return combos;
+        return nodes;
       }
 
       points.slice(i + 1).forEach((p) => {
-        /** @type {Pair} */
-        const pair = {
-          points: [point, p],
-          antinodes: getAntinodes(point, p),
-        };
-
-        combos.push(pair);
+        nodes.push(...getAntinodes(data, point, p));
       });
 
-      return combos;
+      return nodes;
     },
     [],
   );
@@ -91,11 +70,12 @@ function getDelta(p1, p2) {
 }
 
 /**
+ * @param {string[][]} data
  * @param {Point} p1
  * @param {Point} p2
- * @returns {[Point, Point]}
+ * @returns {Point[]}
  */
-function getAntinodes(p1, p2) {
+function getAntinodes(data, p1, p2) {
   const d = getDelta(p1, p2);
 
   /** @type {Point} */
@@ -103,7 +83,7 @@ function getAntinodes(p1, p2) {
   /** @type {Point} */
   const n2 = [p1[0] - d[0], p1[1] - d[1]];
 
-  return [n1, n2];
+  return [n1, n2].filter(([x, y]) => data[y]?.[x]);
 }
 
 /**

@@ -4,12 +4,6 @@ const { readFileSync } = require('fs');
 
 /** @typedef {[number, number]} Point */
 
-/**
- * @typedef Pair
- * @property {[Point, Point]} points
- * @property {Point[]} antinodes
- */
-
 main();
 
 function main() {
