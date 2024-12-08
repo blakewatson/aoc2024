@@ -71,23 +71,3 @@ function countPositions() {
     );
   }, 0);
 }
-
-// function go(xy, dir = '^') {
-//   sanity++;
-//   console.log(sanity);
-//   const [x, y] = xy;
-
-//   mapHistory[y][x] = 'X';
-
-//   const [x2, y2] = getNextPosition(x, y, dir);
-
-//   if (!map[y2]?.[x2]) {
-//     return countPositions();
-//   }
-
-//   if (map[y2][x2] === '#') {
-//     return go(xy, turn(dir));
-//   }
-
-//   return go([x2, y2], dir);
-// }
